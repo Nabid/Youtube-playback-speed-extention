@@ -1,13 +1,13 @@
 {
     "manifest_version": 2,
   
-    "name": "YT Playback Control Plugin",
+    "name": "YT Playback Speed Control Plugin",
     "description": "This extension will control the playback speed of Youtube",
     "version": "1.0",
   
     "content_scripts": [
         {
-          "matches": ["<all_urls>"],
+          "matches": ["https://*.youtube.com/*", "*://youtube.com/*"],
           "run_at": "document_end",
           "js": ["contentScript.js"]
         }
@@ -30,17 +30,8 @@
         "128": "icons/switch128.png"
       },
 
-    "commands": {
-        "_execute_browser_action": {
-          "suggested_key": {
-            "default": "Ctrl+Shift+F",
-            "mac": "MacCtrl+Shift+F"
-          },
-          "description": "Opens hello.html"
-        }
-      },
-
     "permissions": [
-     "activeTab", "<all_urls>"
+     "https://*.youtube.com/*",
+     "*://youtube.com/*"
      ]
   }
