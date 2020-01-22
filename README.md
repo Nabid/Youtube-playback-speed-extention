@@ -1,17 +1,18 @@
 # Youtube-playback-speed-extention
 Youtube playback speed extention for Google Chrome
 
-Alt + 1 = Speed Normal
-Alt + 2 = Speed 1.25
-Alt + 3 = Speed 1.50
+<li>Alt + 0 = Set speed to Normal (1)</li>
+            <li>Alt + + = Increases playback speed by 0.25</li>
+            <li>Alt + - = Decreases playback speed by 0.25</li>
 
 
 Author: Nabid Imteaj
-Contact <a href="mailto:mail.prome@gmail.com">
+Contact: <a href="mailto:mail.prome@gmail.com">
         email</a>.
 
-License: MIT<br>
-Icon: Flaticon Basic License.<br>
-Designed by Smashicons from Flaticon<br>
+License: MIT LICENSE<br>
+<b>Icon:</b> Flaticon Basic License.<br>
+Designed by Smashicons from Flaticon<br><br>
+<b>Notifications:</b> Javascript library by Jamie Livingstone<br>
 
 Screenshot Youtube, License CC0 Creative Commons.

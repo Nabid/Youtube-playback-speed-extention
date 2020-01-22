@@ -9,7 +9,8 @@
         {
           "matches": ["https://*.youtube.com/*", "*://youtube.com/*"],
           "run_at": "document_end",
-          "js": ["contentScript.js", "jquery_3_4_1.slim.min.js"]
+          "js": ["contentScript.js", "notifications.js"],
+          "css": ["notifications.css"]
         }
       ],
 
