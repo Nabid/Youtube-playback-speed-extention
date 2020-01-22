@@ -1,14 +1,4 @@
-function triggerPlaybackSpeed150() {
-    document.querySelector(".ytp-settings-menu .ytp-panel .ytp-panel-menu .ytp-menuitem:nth-child(6)").click();
-}
-
-function triggerPlaybackSpeed125() {
-    document.querySelector(".ytp-settings-menu .ytp-panel .ytp-panel-menu .ytp-menuitem:nth-child(5)").click();
-}
-
-function triggerPlaybackSpeedNormal() {
-    document.querySelector(".ytp-settings-menu .ytp-panel .ytp-panel-menu .ytp-menuitem:nth-child(4)").click();
-}
+var gUpdateInProgress = false;
 
 function triggerPlaybackSpeedDialog() {
     document.querySelector(".ytp-settings-menu .ytp-panel .ytp-panel-menu .ytp-menuitem:nth-child(3)").click();
@@ -19,6 +9,8 @@ function toggleSettingsButton() {
 }
 
 function triggerPlayback(triggerValue) {
+    if(gUpdateInProgress) return;
+
     setTimeout(function() {
 
         //Execute first function
@@ -28,23 +20,36 @@ function triggerPlayback(triggerValue) {
             //Execute second function
            triggerPlaybackSpeedDialog();
            setTimeout(function() {
+                var elemPlaybackRate = document.getElementsByClassName('html5-main-video')[0];
+                var speed = elemPlaybackRate.playbackRate;
 
                 //Execute third function
                 switch(triggerValue) {
                     case 1:
-                        triggerPlaybackSpeedNormal();
+                        speed -= 0.25;
                         break;
                     case 2:
-                        triggerPlaybackSpeed125();
-                        break;
-                    case 3:
-                        triggerPlaybackSpeed150();
+                        speed += 0.25;
                         break;
                 }
-                setTimeout(function() {
 
+                // update playback rate
+                elemPlaybackRate.playbackRate = speed;
+
+                // set the playback rate in video settings if new option available
+                var speedOptions = $(".ytp-settings-menu .ytp-panel .ytp-panel-menu .ytp-menuitem");
+                $(speedOptions).each(function () {
+                    var text = speed == 1 ? "Normal" : speed;
+                    if($(this).text() == text) {
+                        $(this).click();
+                        return;
+                    }
+                });
+
+                setTimeout(function() {
                     //Execute fourth function
                     toggleSettingsButton();
+                    gUpdateInProgress = false;
                 });
             }, 500);
     
@@ -55,19 +60,16 @@ function triggerPlayback(triggerValue) {
 
 function init() {
     document.onkeydown = function (e) {
-        if( e.which === 49 && e.altKey ) {
-            //console.log('you pressed alt + 1');
+        // alt+minus
+        if( e.which === 189 && e.altKey ) {
+            //console.log('you pressed alt + plus');
             triggerPlayback(1);
         }
 
-        if( e.which === 50 && e.altKey ) {
-            //console.log('you pressed alt + 2');
+        // alt+plus
+        if( e.which === 187 && e.altKey ) {
+            //console.log('you pressed alt + minus');
             triggerPlayback(2);
-        }
-
-        if( e.which === 51 && e.altKey ) {
-            //console.log('you pressed alt + 3');
-            triggerPlayback(3);
         }
     };
 }

@@ -9,7 +9,7 @@
         {
           "matches": ["https://*.youtube.com/*", "*://youtube.com/*"],
           "run_at": "document_end",
-          "js": ["contentScript.js"]
+          "js": ["contentScript.js", "jquery_3_4_1.slim.min.js"]
         }
       ],
 
