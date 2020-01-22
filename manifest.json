@@ -3,7 +3,7 @@
   
     "name": "YT Playback Speed Control Plugin",
     "description": "This extension will control the playback speed of Youtube",
-    "version": "1.0",
+    "version": "2.0",
   
     "content_scripts": [
         {
