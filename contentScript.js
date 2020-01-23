@@ -1,5 +1,5 @@
 var gUpdateInProgress = false;
-var gElemPlaybackRate = document.getElementsByClassName('html5-main-video')[0];
+var gElemPlaybackRate;
 
 function triggerPlaybackSpeedDialog() {
     document.querySelector(".ytp-settings-menu .ytp-panel .ytp-panel-menu .ytp-menuitem:nth-child(3)").click();
@@ -32,6 +32,12 @@ function showSuccessNotification(message) {
     });
 }
 
+function getPlaybackObject() {
+    var obj = document.getElementsByClassName('html5-main-video')[0];
+    if(obj && obj.playbackRate) return obj;
+    return null;
+}
+
 function triggerPlayback(triggerValue) {
 
     if(gUpdateInProgress) {
@@ -46,8 +52,10 @@ function triggerPlayback(triggerValue) {
         setTimeout(function() {
 
             //Execute second function to go to speed control
-           triggerPlaybackSpeedDialog();
-           setTimeout(function() {
+            triggerPlaybackSpeedDialog();
+            setTimeout(function() {
+                gElemPlaybackRate = getPlaybackObject();
+                if(!gElemPlaybackRate) return;
                 var speed = gElemPlaybackRate.playbackRate;
 
                 //Execute third function
@@ -90,6 +98,8 @@ function triggerPlayback(triggerValue) {
 }
 
 function init() {
+    gElemPlaybackRate = getPlaybackObject();
+
     document.onkeydown = function (e) {
         // alt+minus
         if( e.which === 189 && e.altKey ) {
@@ -118,7 +128,7 @@ function init() {
         }
     };
 
-    showSuccessNotification("Playback speed: " + gElemPlaybackRate.playbackRate);
+    if(gElemPlaybackRate) showSuccessNotification("Playback speed: " + gElemPlaybackRate.playbackRate);
 }
 
 setTimeout(function() {
