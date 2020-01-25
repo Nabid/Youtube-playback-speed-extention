@@ -38,6 +38,20 @@ function getPlaybackObject() {
     return null;
 }
 
+function getParameterByName(name, url) {
+    if (!url) url = window.location.href;
+    name = name.replace(/[\[\]]/g, '\\$&');
+    var regex = new RegExp('[?&]' + name + '(=([^&#]*)|&|#|$)'),
+        results = regex.exec(url);
+    if (!results) return null;
+    if (!results[2]) return '';
+    return decodeURIComponent(results[2].replace(/\+/g, ' '));
+}
+
+function isYoutubeVideoWindow() {
+    return getParameterByName("v") != null;
+}
+
 function triggerPlayback(triggerValue) {
 
     if(gUpdateInProgress) {
@@ -87,7 +101,9 @@ function triggerPlayback(triggerValue) {
                 setTimeout(function() {
                     //Execute fourth function to close the menu
                     toggleSettingsButton();
-                    showSuccessNotification(String(speed));
+                    if(isYoutubeVideoWindow()) {
+                        showSuccessNotification(String(speed));
+                    }
                     gUpdateInProgress = false;
                 });
             }, 500);
@@ -128,7 +144,9 @@ function init() {
         }
     };
 
-    if(gElemPlaybackRate) showSuccessNotification("Playback speed: " + gElemPlaybackRate.playbackRate);
+    if(gElemPlaybackRate && isYoutubeVideoWindow()) {
+        showSuccessNotification("Playback speed: " + gElemPlaybackRate.playbackRate);
+    }
 }
 
 setTimeout(function() {
